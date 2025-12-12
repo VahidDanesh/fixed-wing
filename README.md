@@ -247,7 +247,7 @@ flowchart TD
     
     Delay --> ControlLoop
     
-    style Start fill:#90EE90
+    style Start fill:#132a13
     style WaitLaunch fill:#780000
     style RudderCheck fill:#005f73
     style ElevatorCheck fill:#005f73
