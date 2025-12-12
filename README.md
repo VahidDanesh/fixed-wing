@@ -205,7 +205,7 @@ The system uses a **rate-based bang-bang controller** with servo hold timers to 
 ```mermaid
 flowchart TD
     Start([System Startup]) --> Init[Initialize Hardware<br/>Configure pins<br/>Attach servos<br/>Test sensors 5x]
-    Init --> Neutral[Set Servos to Neutral<br/>Rudder: 1700µs<br/>Elevator: 1100µs]
+    Init --> Neutral[Set Servos to Neutral]
     Neutral --> WaitLaunch{Launch Detected?<br/>Height > 60cm}
     
     WaitLaunch -->|No| ReadSensors1[Read Sensors<br/>20Hz Loop]
@@ -248,7 +248,7 @@ flowchart TD
     Delay --> ControlLoop
     
     style Start fill:#90EE90
-    style WaitLaunch fill:#FFE4B5
+    style WaitLaunch fill:#780000
     style RudderCheck fill:#FFB6C1
     style ElevatorCheck fill:#FFB6C1
     style WriteServo fill:#87CEEB
