@@ -56,8 +56,8 @@ An autonomous flight control system for an unpowered glider that navigates a nar
 ### Software Installation
 ```bash
 # Clone repository
-git clone <repository-url>
-cd Fixed_wing
+git clone https://github.com/VahidDanesh/fixed-wing.git
+cd fixed-wing
 
 # Build project
 pio run
