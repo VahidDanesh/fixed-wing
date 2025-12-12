@@ -20,11 +20,10 @@ Design and implement an autonomous flight control system that successfully navig
 
 
 Challenges:
-• Maintain altitude (avoid ground collision)
-• Navigate narrowing corridor (avoid wall collision)
-• React to rate of change (predictive control)
-• Complete mission in 2-5 seconds
-```
+- Maintain altitude (avoid ground collision)
+- Navigate narrowing corridor (avoid wall collision)
+- React to rate of change (predictive control)
+- Complete mission in 2-5 seconds
 
 ### Success Criteria
 ✅ Glider maintains stable flight throughout corridor  
@@ -363,3 +362,8 @@ This system is designed for autonomous glider navigation through a narrowing cor
 - React to rate of change to prevent wall/ground collision
 - Complete flight in 2-5 seconds
 - Log sensor data proving autonomous operation
+
+
+## Flight Demonstration
+
+![Flight Test](video/fixed-wing.mp4)
