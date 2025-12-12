@@ -21,7 +21,7 @@ const unsigned long SONAR_TIMEOUT_US = 30000; // 30ms ~ 400cm range
 const float NO_READING_VAL         = -1.0;   // Return value for timeout
 
 // Filter Settings
-const float DIST_FILTER_ALPHA      = 0.50;   // Low pass filter strength (0.0 - 1.0)
+const float DIST_FILTER_ALPHA      = 0.70;   // Low pass filter strength (0.0 - 1.0)
 const float MAX_DIST_JUMP_CM       = 60.0;   // Spike rejection threshold
 const float FAILSAFE_DIST_CM       = 50.0;   // Default distance if sensor fails at startup
 
