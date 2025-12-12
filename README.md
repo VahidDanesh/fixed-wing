@@ -216,26 +216,26 @@ flowchart TD
     StartFlight --> ControlLoop[Control Loop 20Hz]
     
     ControlLoop --> ReadSensors2[Read Sensors<br/>Right wall distance<br/>Height above ground]
-    ReadSensors2 --> Filter[Apply Low-Pass Filter<br/>α = 0.5<br/>Reject spikes > 60cm]
+    ReadSensors2 --> Filter[Apply Low-Pass Filter<br/>Reject spikes > 60cm]
     
     Filter --> CalcRate[Calculate Rate of Change<br/>rawRate = -Δdistance / Δtime]
     CalcRate --> RollingAvg[Apply Rolling Average<br/>3-sample window]
     
     RollingAvg --> RudderCheck{avgRateRight<br/>> 50 cm/s?}
-    RudderCheck -->|Yes| RudderLeft[Rudder LEFT 900µs<br/>Start Hold Timer]
+    RudderCheck -->|Yes| RudderLeft[Rudder LEFT <br/>Start Hold Timer]
     RudderCheck -->|No| RudderHoldCheck{Hold Timer<br/>Active?}
     RudderHoldCheck -->|Yes, < 500ms| RudderLeft
-    RudderHoldCheck -->|No| RudderNeutral[Rudder NEUTRAL 1700µs]
+    RudderHoldCheck -->|No| RudderNeutral[Rudder NEUTRAL]
     
     RudderLeft --> ElevatorCheck{avgRateHeight<br/>> 50 cm/s?}
     RudderNeutral --> ElevatorCheck
     
-    ElevatorCheck -->|Yes| ElevatorUp[Elevator UP 2100µs<br/>Start Hold Timer]
+    ElevatorCheck -->|Yes| ElevatorUp[Elevator UP <br/>Start Hold Timer]
     ElevatorCheck -->|No| ElevatorHoldCheck{Hold Timer<br/>Active?}
     ElevatorHoldCheck -->|Yes, < 500ms| ElevatorUp
     ElevatorHoldCheck -->|No| ElevatorNeutral[Elevator NEUTRAL 1100µs]
     
-    ElevatorUp --> Smooth[Apply Servo Smoothing<br/>α = 0.7]
+    ElevatorUp --> Smooth[Apply Servo Smoothing]
     ElevatorNeutral --> Smooth
     
     Smooth --> Deadband{Change ><br/>300µs?}
@@ -249,11 +249,11 @@ flowchart TD
     
     style Start fill:#90EE90
     style WaitLaunch fill:#780000
-    style RudderCheck fill:#FFB6C1
-    style ElevatorCheck fill:#FFB6C1
-    style WriteServo fill:#87CEEB
-    style ControlLoop fill:#DDA0DD
-    style Deadband fill:#F0E68C
+    style RudderCheck fill:#005f73
+    style ElevatorCheck fill:#005f73
+    style WriteServo fill:#31572c
+    style ControlLoop fill:#31572c
+    style Deadband fill:#f48c06
 ```
 
 ### Key Features
