@@ -269,13 +269,6 @@ T:0.20 | DistR:150.5 | DistH:95.3 | RateR:12.5 | RateH:-5.2 | Rud:1700 | Ele:110
 
 **Enable logging:** Uncomment section 11 in `loop()` function
 
-## License
-
-MIT License - See LICENSE file for details
-
-## Contributing
-
-Pull requests welcome. For major changes, please open an issue first to discuss proposed changes.
 
 ## Mission Objectives
 
