@@ -366,4 +366,4 @@ This system is designed for autonomous glider navigation through a narrowing cor
 
 ## Flight Demonstration
 
-![Flight Test](video/fixed-wing.mp4)
+![Flight Test](videos/fixed-wing.gif)
