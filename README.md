@@ -2,6 +2,37 @@
 
 An autonomous flight control system for an unpowered glider that navigates a narrowing corridor using ultrasonic sensors and servo-controlled surfaces. The system uses rate-based control to maintain stable flight through real-time sensor feedback.
 
+
+## Mission Overview
+
+### Project Goal
+Design and implement an autonomous flight control system that successfully navigates an unpowered glider through a narrowing corridor using only sensor feedback and control surfaces. The glider must maintain stable flight while avoiding collision with walls and ground.
+
+### Mission Requirements
+- **Flight Duration:** 2-5 seconds
+- **Initial Corridor Width:** 8 feet
+- **Final Corridor Width:** 3 feet  
+- **Corridor Length:** 15 feet
+- **Target Altitude:** 3.5 feet above ground
+- **Navigation:** Fully autonomous (no human intervention after launch)
+
+### Mission Map
+
+
+Challenges:
+• Maintain altitude (avoid ground collision)
+• Navigate narrowing corridor (avoid wall collision)
+• React to rate of change (predictive control)
+• Complete mission in 2-5 seconds
+```
+
+### Success Criteria
+✅ Glider maintains stable flight throughout corridor  
+✅ No collision with walls or ground  
+✅ Sensor data logged continuously  
+✅ Autonomous control demonstrated  
+✅ Flight completed within expected timeframe  
+
 ## Hardware Components
 
 ### Microcontroller
@@ -169,6 +200,60 @@ The system uses a **rate-based bang-bang controller** with servo hold timers to 
 │    - Deadband filter (300µs minimum)    │
 │    - Write to servos                    │
 └─────────────────────────────────────────┘
+```
+
+```mermaid
+flowchart TD
+    Start([System Startup]) --> Init[Initialize Hardware<br/>Configure pins<br/>Attach servos<br/>Test sensors 5x]
+    Init --> Neutral[Set Servos to Neutral<br/>Rudder: 1700µs<br/>Elevator: 1100µs]
+    Neutral --> WaitLaunch{Launch Detected?<br/>Height > 60cm}
+    
+    WaitLaunch -->|No| ReadSensors1[Read Sensors<br/>20Hz Loop]
+    ReadSensors1 --> WaitLaunch
+    
+    WaitLaunch -->|Yes| StartFlight[Start Flight Timer<br/>Initialize Previous Values]
+    
+    StartFlight --> ControlLoop[Control Loop 20Hz]
+    
+    ControlLoop --> ReadSensors2[Read Sensors<br/>Right wall distance<br/>Height above ground]
+    ReadSensors2 --> Filter[Apply Low-Pass Filter<br/>α = 0.5<br/>Reject spikes > 60cm]
+    
+    Filter --> CalcRate[Calculate Rate of Change<br/>rawRate = -Δdistance / Δtime]
+    CalcRate --> RollingAvg[Apply Rolling Average<br/>3-sample window]
+    
+    RollingAvg --> RudderCheck{avgRateRight<br/>> 50 cm/s?}
+    RudderCheck -->|Yes| RudderLeft[Rudder LEFT 900µs<br/>Start Hold Timer]
+    RudderCheck -->|No| RudderHoldCheck{Hold Timer<br/>Active?}
+    RudderHoldCheck -->|Yes, < 500ms| RudderLeft
+    RudderHoldCheck -->|No| RudderNeutral[Rudder NEUTRAL 1700µs]
+    
+    RudderLeft --> ElevatorCheck{avgRateHeight<br/>> 50 cm/s?}
+    RudderNeutral --> ElevatorCheck
+    
+    ElevatorCheck -->|Yes| ElevatorUp[Elevator UP 2100µs<br/>Start Hold Timer]
+    ElevatorCheck -->|No| ElevatorHoldCheck{Hold Timer<br/>Active?}
+    ElevatorHoldCheck -->|Yes, < 500ms| ElevatorUp
+    ElevatorHoldCheck -->|No| ElevatorNeutral[Elevator NEUTRAL 1100µs]
+    
+    ElevatorUp --> Smooth[Apply Servo Smoothing<br/>α = 0.7]
+    ElevatorNeutral --> Smooth
+    
+    Smooth --> Deadband{Change ><br/>300µs?}
+    Deadband -->|Yes| WriteServo[Write to Servos]
+    Deadband -->|No| Skip[Skip Write<br/>Thermal Protection]
+    
+    WriteServo --> Delay[Wait for Next Cycle<br/>50ms period]
+    Skip --> Delay
+    
+    Delay --> ControlLoop
+    
+    style Start fill:#90EE90
+    style WaitLaunch fill:#FFE4B5
+    style RudderCheck fill:#FFB6C1
+    style ElevatorCheck fill:#FFB6C1
+    style WriteServo fill:#87CEEB
+    style ControlLoop fill:#DDA0DD
+    style Deadband fill:#F0E68C
 ```
 
 ### Key Features
