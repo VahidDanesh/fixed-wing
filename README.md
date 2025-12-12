@@ -233,7 +233,7 @@ flowchart TD
     ElevatorCheck -->|Yes| ElevatorUp[Elevator UP <br/>Start Hold Timer]
     ElevatorCheck -->|No| ElevatorHoldCheck{Hold Timer<br/>Active?}
     ElevatorHoldCheck -->|Yes, < 500ms| ElevatorUp
-    ElevatorHoldCheck -->|No| ElevatorNeutral[Elevator NEUTRAL 1100µs]
+    ElevatorHoldCheck -->|No| ElevatorNeutral[Elevator NEUTRAL]
     
     ElevatorUp --> Smooth[Apply Servo Smoothing]
     ElevatorNeutral --> Smooth
